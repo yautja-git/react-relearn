@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1_props基本使用</title>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <div id="test3"></div>
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom,用于react操作dom -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入babel,用于将JSX转为JS -->
+    <script src="../js/babel.min.js"></script>
+
+    <script type="text/babel"> /* 此处type一定要写babel */
+        class Person extends React.Component {
+            render() {
+                const {name,sex,age}=this.props
+                return (
+                    <ul>
+                        <li>姓名：{name}</li>
+                        <li>性别：{sex}</li>
+                        <li>年龄：{age+1}</li>
+                    </ul>
+                )
+            }
+        }
+
+        ReactDOM.render(<Person />, document.getElementById('test1'))
+        ReactDOM.render(<Person name={'张三'} sex={'男'} age={18} />, document.getElementById('test2'))
+        
+        const p={
+            name:'老刘',
+            sex:'女',
+            age:19
+        }
+        //原生js展开运算符...不能展开一个对象，但react+babel允许...展开对象(仅适用于标签属性的传递，其他地方还是不行)
+        ReactDOM.render(<Person {...p}/>, document.getElementById('test3'))
+    </script>
+</body>

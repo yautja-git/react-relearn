@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1_类的基本知识</title>
+</head>
+<body>
+    <script>
+        /* 
+            1.类中的构造器不是必须写的，要对实例进行一些初始化的操作，如添加指定属性时才写。
+            2.如果A类继承B类，且A类中写了构造器，那么A类构造器中必须调用super,即调用父类构造器
+            2.类中所定义的方法，都是放在类的原型对象上，供实例去使用。
+         */
+        //创建一个Person类
+        class Person{
+            //构造器方法
+            constructor(name,age){
+                //构造器中的this是谁？--类的实例对象
+                this.name=name
+                this.age=age
+            }
+            //一般方法
+            speak(){
+                //spaek方法放在哪里？--类的原型对象上,供实例使用
+                //通过Person实例调用speak时，spaek中的this就是Person实例
+                console.log(`我叫${this.name}，年龄${this.age}`);
+            }
+        }
+        
+        class Student extends Person{
+            constructor(name,age,grade){
+                super(name,age)//调用父类的构造器
+                this.grade=grade
+                this.school='尚硅谷'
+            }
+            //重写从父类继承过来的方法
+            speak(){
+                console.log(`我叫${this.name}，年龄${this.age},正在读${this.grade}`);
+            }
+            study(){
+                console.log('我很努力的学习');
+            }
+        }
+        let s1=new Student('小张','25','5')
+        let p1=new Person('小郑','26')
+
+
+        /* 
+            原型
+            我们所创建的每一个函数，解析器都会向函数中添加一个属性prototype
+                这个属性对应一个对象，这个对象就是我们所谓的原型对象
+            如果函数作为普通函数调用，prototype没有任何作用
+            当函数通过构造函数调用时，它所创建的对象中都会有一个属性__proto__指向该构造函数的原型对象    
+         
+            原型对象就相当于一个公共区域，所有同一个类的实例都可以访问到原型对象
+                我们可以将对象中共有的内容统一设置到原型对象中。
+            当我们访问对象的一个属性或方法时，
+                先在对象自身中寻找，如果没有，则去构造函数的原型对象中寻找
+            以后我们创建构造函数时，可以将这些对象共有的属性和方法，统一添加到构造函数的原型对象中
+            这样不用分别为每一个对象添加，也不会污染全局作用域
+         */
+        console.log(s1.__proto__===Student.prototype);//true
+        Student.prototype.eat=function(){
+            console.log(this.name + '学生吃饭');
+        }
+
+         class Car{
+             constructor(name,price){
+                 this.name=name
+                 this.price=price
+                 this.whelel=4
+             }
+             //类中可以直接写赋值语句,如下代码的含义是：
+                //给Car的实例对象添加一个属性，名为a,值为1
+             a=1
+         }
+
+         const c1=new Car('奔驰c63',199)
+         const c2=new Car('宝马',299)
+
+         class Test{
+             constructor(name){
+                this.name=name
+             }
+             say(){
+                 console.log(this);
+                 setTimeout(()=>{
+                     console.log(this);
+                 },1000)
+             }
+         }
+         let t1=new Test('哈哈')
+         t1.say()
+         let aaaa=t1.say
+
+         aaaa()
+
+    </script>
+</body>
+</html>

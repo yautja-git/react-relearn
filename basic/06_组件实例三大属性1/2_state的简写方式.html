@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2_state的简写方式</title>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom,用于react操作dom -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入babel,用于将JSX转为JS -->
+    <script src="../js/babel.min.js"></script>
+
+    <script type="text/babel"> /* 此处type一定要写babel */
+        class Weather extends React.Component {
+            //简写方式，此处就不需要写构造器了
+            // constructor(props) {
+            //     super(props)
+            // }
+
+            //类中可以直接赋值,初始化状态
+            state = {
+                isHot: false,
+                wind: "微风"
+            }
+            render() {
+                const { isHot, wind } = this.state
+                return (
+                    <h1 onClick={this.changeWeather}>今天天气很{isHot ? '炎热' : '凉爽'},{wind}</h1>
+                )
+            }
+            //箭头函数没有this,自动在函数的外层找,此时的this就是weather实例对象
+            //就不用再写bind(this)
+            //注意，箭头函数的this在定义函数时就绑定了，而普通函数的this是在执行函数的时候才绑定
+            changeWeather = () => {
+                const { isHot } = this.state
+                this.setState({
+                    isHot: !isHot
+                })
+            }
+
+            // changeWeather(){
+            //     const { isHot } = this.state
+            //     this.setState({
+            //         isHot: !isHot
+            //     })
+            // }
+        }
+        ReactDOM.render(<Weather />, document.getElementById('test'))
+
+    </script>
+</body>

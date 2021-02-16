@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Person{
+            constructor(name,age){
+                this.name=name
+                this.age=age
+            }
+            speak(){
+                //speak放在哪里？--类的原型对象上，供实例使用
+                //通过Person实例调用speak时，speak中的this指向Person实例
+                console.log(this);
+            }
+        }
+        const p1=new Person('tom',18)
+        p1.speak()//通过实例调用spaeak调用speak
+        const x=p1.speak
+        x() //直接调用,类中的自定义的方法，在局部自动开启严格模式，所以
+            //此处的this不是window,而是undefinend,如下面的demo函数
+        function demo(){
+            'use strict'
+            console.log(this);
+        }
+        function demo2(){
+            console.log(this);
+        }
+        demo()
+        demo2()
+    </script>
+</body>
+</html>
