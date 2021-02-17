@@ -38,7 +38,9 @@
                 return (
                     <div>
                         <h2 onClick={this.changeWeather}>今天天气很{this.state.isHot ? '炎热' : '凉爽'}</h2>
+                        {/* 内联函数执行两次，第一次的参数是null */}
                         {/* <input ref={c=>{this.input1=c;console.log('@',c);}} type="text" /> */}
+                        {/* 类绑定函数只执行一次 */}
                         <input ref={this.saveInput} type="text" />
                         <button onClick={this.showData}>点我提示输入的数据</button>
                     </div>
